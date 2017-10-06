@@ -30,10 +30,11 @@ function initMap() {
     });
 }
 
-function drawMapMarkers(positions){
-    positions.forEach(function (pos) {
+function drawMapMarkers(markers){
+    markers.forEach(function (mark) {
         var marker = new google.maps.Marker({
-            position: pos,
+            position: mark.pos,
+            title: mark.type,
             map: map
 
         });

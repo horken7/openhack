@@ -1,4 +1,5 @@
 from rest_framework import permissions, viewsets
+from django.shortcuts import render
 
 from .serializers import JobsSerializer, HousingSerializer, ApplicantSerializer
 
@@ -19,3 +20,6 @@ class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = Applicant.objects.all().order_by('name')
     serializer_class = ApplicantSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+def index(request):
+    return render(request, 'pinguin/index.html')
