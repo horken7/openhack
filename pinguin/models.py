@@ -28,9 +28,6 @@ class Jobs(models.Model):
     """
     company = models.CharField(max_length=200, help_text='the name of the company')
     type = models.CharField(max_length=200, help_text='job type')
-    # skills = models.CharField(max_length=200, help_text='required skills')
-    # address = models.CharField(max_length=200, help_text='address of the company')
-    # salary = models.CharField(max_length=200, null=True, help_text='salary for the position')
     city = models.CharField(max_length=200, help_text='city of the company')
     longitude = models.FloatField(help_text='longitude of the house')
     latitude = models.FloatField(help_text='latitude of the house')
