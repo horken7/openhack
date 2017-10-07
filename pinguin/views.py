@@ -5,7 +5,9 @@ from .serializers import JobsSerializer, HousingSerializer, ApplicantSerializer,
 from .models import Jobs, Housing, Applicant, Heatmap
 from .data_collection.collect_data import CollectData
 
-debug = True
+from django.shortcuts import render
+
+debug = False
 
 if(debug):
     apa = CollectData()
@@ -33,3 +35,6 @@ class HeatmapViewSet(viewsets.ModelViewSet):
     queryset = Heatmap.objects.all().order_by('occupation')
     serializer_class = HeatmapSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+def index(request):
+    return render(request, 'pinguin/index.html')
