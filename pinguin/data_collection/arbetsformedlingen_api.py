@@ -21,7 +21,15 @@ class HandlerArbetsformedlingenAPI:
         headers = {'Accept-Language': 'sv'}
         url = "http://api.arbetsformedlingen.se/af/v0/platsannonser/" + str(id)
         response = requests.get(url, headers=headers)
-        return response
+        json_data = json.loads(response.text)
+        return json_data
+
+    def get_occupation_city(self, occupation, city):
+        headers = {'Accept-Language': 'sv'}
+        url = "http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?nyckelord=" + str(occupation) + " " + str(city)
+        response = requests.get(url, headers=headers)
+        json_data = json.loads(response.text)
+        return json_data
 
 
 

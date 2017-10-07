@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Jobs, Housing, Applicant
+from .models import Jobs, Housing, Applicant, Heatmap
 
 class HousingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +15,9 @@ class JobsSerializer(serializers.ModelSerializer):
 class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Applicant
+        fields = '__all__'
+
+class HeatmapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Heatmap
         fields = '__all__'

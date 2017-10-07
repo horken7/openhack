@@ -1,3 +1,5 @@
 Django
 djangorestframework
 coreapi
+django-filter
+geopy

@@ -10,6 +10,7 @@ router = DefaultRouter()
 router.register(r'jobs', views.JobsViewSet)
 router.register(r'housing', views.HousingViewSet)
 router.register(r'applicant', views.ApplicantViewSet)
+router.register(r'heatmap', views.HeatmapViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
