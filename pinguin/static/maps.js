@@ -13,13 +13,13 @@ var mapCenter = {lat: 61.004627, lng: 14.537272}; //Initial focus of the map
 var mapMarkersArray = [];
 var heatMapData = [];
 var heatmapZoomTresh = 13;
-
+var iconPath = '/static/icons/';
 
 var mapIcons = {
-    work_default: 'icons/work_blue.png',
-    home_default: 'icons/home_blue.png',
-    work_clicked: 'icons/work_green.png',
-    home_clicked: 'icons/home_green.png'
+    work_default: iconPath+'work_blue.png',
+    home_default: iconPath+'home_blue.png',
+    work_clicked: iconPath+'work_green.png',
+    home_clicked: iconPath+'home_green.png'
 };
 var map, heatmap;
 /**
