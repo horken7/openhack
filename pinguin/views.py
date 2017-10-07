@@ -5,7 +5,7 @@ from .serializers import JobsSerializer, HousingSerializer, ApplicantSerializer,
 from .models import Jobs, Housing, Applicant, Heatmap
 from .data_collection.collect_data import CollectData
 
-debug = True
+debug = False
 
 if(debug):
     apa = CollectData()
@@ -33,3 +33,5 @@ class HeatmapViewSet(viewsets.ModelViewSet):
     queryset = Heatmap.objects.all().order_by('occupation')
     serializer_class = HeatmapSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('occupation', 'occupation')
