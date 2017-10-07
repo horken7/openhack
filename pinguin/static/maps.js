@@ -1,5 +1,12 @@
 /**
  * Created by Kim on 2017-10-06.
+ *
+ *  Colors used in the icon files:
+ *      Blue: #2d468d
+ *      Green: #2d8d53
+ *      Purple: #832d8d
+ *      Red: #8d2d38
+ *
  */
 var MAP_API_KEY = "AIzaSyDdeEbc5m6P5em_LlQ92oxsufsCU5hNadE";
 var mapCenter = {lat: 61.004627, lng: 14.537272}; //Initial focus of the map
@@ -9,8 +16,10 @@ var heatmapZoomTresh = 13;
 
 
 var mapIcons = {
-    work: 'icons/work.png',
-    home: 'icons/home.png'
+    work_default: 'icons/work_blue.png',
+    home_default: 'icons/home_blue.png',
+    work_clicked: 'icons/work_green.png',
+    home_clicked: 'icons/home_green.png'
 };
 var map, heatmap;
 /**
@@ -106,7 +115,11 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 5,
         center: mapCenter,
-        styles: mapStyle
+        styles: mapStyle,
+        streetViewControl: false,
+        mapTypeControl: false,
+        fullscreenControl: false
+
     });
 
     /* //Center marker, uncomment to more clearly see the initial focus point of the map
@@ -150,6 +163,35 @@ function initMap() {
         }
     });
 
+    /**
+     * Click listener to enable clicking on heatmaps
+     */
+    map.addListener('click', function(e){
+        var lat = e.latLng.lat();
+        var lng = e.latLng.lng();
+        var shortestDist = 1000; //Large number
+        var shortestPoint = {lat: -1, lng: -1}; //invalid coordinates
+
+        for(var i=0; i < heatMapData.length; i++){
+            var dlat = heatMapData[i].location.lat(),
+                dlng = heatMapData[i].location.lng();
+
+            var dist = Math.sqrt(Math.pow(lat-dlat,2) + Math.pow(lng-dlng,2));
+            if(dist < shortestDist){
+                shortestDist = dist;
+                shortestPoint.lat = dlat;
+                shortestPoint.lng = dlng;
+
+            }
+        }
+
+        //if click on heatmap zoom in on it
+        if(shortestDist < 1) {
+            map.set('center', new google.maps.LatLng(shortestPoint.lat, shortestPoint.lng));
+            map.set('zoom', 13)
+        }
+    });
+
 }
 
 
@@ -177,19 +219,27 @@ function removeMapMarkers(markersToRemove) {
         }
     }
 }
-
+/**
+ *
+ * @param markers, list of markers
+ */
 function addMapMarkers(markers){
     markers.forEach(function (mark) {
         var marker = new google.maps.Marker({
             position: mark.pos,
-            icon: mapIcons[mark.type],
+            icon: mapIcons[mark.type + "_default"],
             map: map,
 
             //Custom attributes
-            marker_id: mark.id
+            marker_id: mark.id,
+            clicked: false
         });
+        //On click on a marker
         marker.addListener('click',function(){
-            console.log(marker.marker_id);
+            console.log(marker.clicked);
+            marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]) ;
+            marker.clicked = !marker.clicked;
+
         });
         mapMarkersArray.push(marker);
 
@@ -234,8 +284,4 @@ function addMapHeatmap(cities) {
     heatmap.set('gradient', gradient);
     heatmap.set('radius', map.zoom*4);
     heatmap.set('opacity',0.5);
-}
-
-function toggleHeatmap(){
-    heatmap.setMap(heatmap.getMap() ? null : map);
 }
