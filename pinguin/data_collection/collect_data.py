@@ -5,9 +5,7 @@ from .arbetsformedlingen_api import HandlerArbetsformedlingenAPI
 from .google_geocoding_api import HandlerGoogleGeocodingAPI
 from .booli_api import HandlerBooliAPI
 
-import time
 from geopy.geocoders import Nominatim
-import geocoder
 
 class CollectData:
     def __init__(self):
@@ -22,29 +20,9 @@ class CollectData:
 
         self.geolocator = Nominatim()
 
-        # self.get_heatmap()
-        # self.get_jobs_city()
+        self.get_heatmap()
+        self.get_jobs_city()
         self.get_houses()
-
-
-
-    # def get_jobs(self):
-    #     ind = 21800600
-    #     for i in range(50):
-    #         try:
-    #             response = self.abfAPI.get_platsannons(ind+i)
-    #             json_data = json.loads(response.text)
-    #             company = json_data['platsannons']['arbetsplats']['arbetsplatsnamn']
-    #             address = json_data['platsannons']['arbetsplats']['besoksadress']
-    #             zipcode = json_data['platsannons']['arbetsplats']['postnummer']
-    #             city = json_data['platsannons']['arbetsplats']['postort']
-    #             type = json_data['platsannons']['annons']['yrkesbenamning']
-    #             latitude, longitude = self.ggcAPI.get_coordinates(address, zipcode, city)
-    #             j = Jobs(company=company, type=type, city=city, latitude=latitude, longitude=longitude)
-    #             j.save()
-    #         except:
-    #             pass
-    #         print(i)
 
     def get_heatmap(self):
         heats = []

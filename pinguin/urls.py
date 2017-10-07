@@ -9,7 +9,7 @@ schema_view = get_schema_view(title='Pinguin API')
 router = DefaultRouter()
 router.register(r'jobs', views.JobsViewSet)
 router.register(r'housing', views.HousingViewSet)
-router.register(r'applicant', views.ApplicantViewSet)
+# router.register(r'applicant', views.ApplicantViewSet)
 router.register(r'heatmap', views.HeatmapViewSet)
 
 urlpatterns = [

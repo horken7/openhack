@@ -21,6 +21,8 @@ class HousingViewSet(viewsets.ModelViewSet):
     queryset = Housing.objects.all().order_by('address')
     serializer_class = HousingSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('city', 'city')
 
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = Applicant.objects.all().order_by('name')
