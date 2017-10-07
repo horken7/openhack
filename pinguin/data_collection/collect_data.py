@@ -52,10 +52,10 @@ class CollectData:
         for i in range(len(heatmatrix)):
             heatmatrix[:, i] = heatmatrix[:, i] / max(heatmatrix[:, i])
         for i, city in enumerate(self.cities):
-            # location = self.geolocator.geocode('stockholm')
-            # latitude = location.latitude
-            # longitude = location.longitude
-            latitude, longitude = self.ggcAPI.get_coordinates_city('stockholm')
+            location = self.geolocator.geocode('stockholm')
+            latitude = location.latitude
+            longitude = location.longitude
+            # latitude, longitude = self.ggcAPI.get_coordinates_city('stockholm')
             for j, occupation in enumerate(self.occupations):
                 heat = heatmatrix[i,j]
                 h = Heatmap(city=city, occupation=occupation, longitude=longitude, latitude=latitude, heat=heat)
