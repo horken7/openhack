@@ -1,2 +1,5 @@
 Django
-rest_framework
+djangorestframework
+coreapi
+django-filter
+geopy
