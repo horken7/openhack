@@ -1,0 +1,291 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #333;
+}
+body {
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+}
+
+h1,h2, h3 {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+.site-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  padding: 20px;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+  -webkit-box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
+          box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
+}
+.site-wrapper-inner {
+  vertical-align: top;
+}
+.cover-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Padding for spacing */
+.inner {
+  padding: 2rem;
+}
+
+
+/*
+ * Header
+ */
+
+.masthead {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.masthead-brand {
+  margin-bottom: 0;
+  margin-top: 0;
+  cursor: pointer;
+}
+
+.map-brand {
+  position: absolute;
+  display: none;
+  font-size: 40px;
+  top: 0;
+  left: 0;
+  padding: 2rem;
+  cursor: pointer;
+}
+
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: bold;
+  color: rgba(255,255,255,.5);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255,255,255,.25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+.slogan {
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+  .nav-masthead {
+    float: right;
+  }
+}
+
+.button {
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  float: right;
+}
+
+/*
+ * Navbutton
+ */
+
+.container-btn {
+  float: right;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 3px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+    transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -4px) ;
+    transform: rotate(45deg) translate(-8px, -4px) ;
+}
+
+/*
+ * Map
+ */
+
+#map {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+}
+
+/*
+ * Sidebar
+ */
+.sidebar {
+  position: relative;
+  background-color: #fff;
+  color: #252525;
+  min-height: 
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+
+.title h3 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.questions {
+  margin-top: 75px;
+}
+
+.question {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.options {
+  padding: 0;
+  background-color: #fff;
+  color: #333;
+}
+
+.options div {
+  padding: 20px;
+  border: 1px solid #f2f2f2;
+  width: 100%;
+  cursor: pointer;
+  text-shadow: none;
+}
+
+.options div:hover {
+  background-color: #f2f2f2;
+}
+
+.options div:active {
+  background-color: #dcdcdc;
+}
+
+.options div:not(:last-child) {
+  border-bottom: none;
+}
+
+.transparent {
+  opacity: 0.1;
+  filter: alpha(opacity=10); /* For IE8 and earlier */
+}
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: bold;
+}
+
+
+/*
+ * Footer
+ */
+
+.mastfoot {
+  color: rgba(255,255,255,.5);
+}
+
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 40em) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+  }
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+    z-index: 1000;
+  }
+}
+
+@media (min-width: 62em) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    95%;
+  }
+}

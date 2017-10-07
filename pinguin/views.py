@@ -1,11 +1,12 @@
 from rest_framework import permissions, viewsets, generics, filters
+from django.shortcuts import render
 
 from .serializers import JobsSerializer, HousingSerializer, ApplicantSerializer, HeatmapSerializer
 
 from .models import Jobs, Housing, Applicant, Heatmap
 from .data_collection.collect_data import CollectData
 
-debug = False
+debug = True
 
 if(debug):
     apa = CollectData()
@@ -35,3 +36,7 @@ class HeatmapViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('occupation', 'occupation')
+
+def index(request):
+    return render(request, 'pinguin/index.html')
+
