@@ -24,17 +24,5 @@ class HandlerArbetsformedlingenAPI:
         return response
 
 
-abfAPI = HandlerArbetsformedlingenAPI()
 
-# abfAPI.getLans()
-ind = 21808418
-responses = []
-for i in range(50):
-    try:
-        response = abfAPI.get_platsannons(ind+i)
-        json_data = json.loads(response.text)
-        responses.append(json_data)
-    except:
-        pass
-    print(i)
-print(responses)
+

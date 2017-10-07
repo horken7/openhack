@@ -3,6 +3,9 @@ from rest_framework import permissions, viewsets
 from .serializers import JobsSerializer, HousingSerializer, ApplicantSerializer
 
 from .models import Jobs, Housing, Applicant
+from .data_collection.collect_data import CollectData
+
+apa = CollectData()
 
 class JobsViewSet(viewsets.ModelViewSet):
     queryset = Jobs.objects.all().order_by('company')
