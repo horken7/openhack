@@ -123,11 +123,11 @@ function initMap() {
     });
 
     /* //Center marker, uncomment to more clearly see the initial focus point of the map
-    var marker = new google.maps.Marker({
-        position: mapCenter,
-        map: map
-    });
-    */
+     var marker = new google.maps.Marker({
+     position: mapCenter,
+     map: map
+     });
+     */
 
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatMapData,
@@ -158,8 +158,9 @@ function initMap() {
         } else {
             if(heatmap.getMap())
                 heatmap.set('map',null);
-                //TODO: Figure out a nice way to call with correct markers
-                addMapMarkers(mapTestMarkers);
+            //TODO: Figure out a nice way to call with correct markers
+            var c = getClosestCity(map.center.lat(),map.center.lng());
+            makeMarkersApiCall(c.city_id);
         }
     });
 
@@ -169,30 +170,50 @@ function initMap() {
     map.addListener('click', function(e){
         var lat = e.latLng.lat();
         var lng = e.latLng.lng();
-        var shortestDist = 1000; //Large number
-        var shortestPoint = {lat: -1, lng: -1}; //invalid coordinates
+        var c = getClosestCity(lat,lng);
 
-        for(var i=0; i < heatMapData.length; i++){
-            var dlat = heatMapData[i].location.lat(),
-                dlng = heatMapData[i].location.lng();
-
-            var dist = Math.sqrt(Math.pow(lat-dlat,2) + Math.pow(lng-dlng,2));
-            if(dist < shortestDist){
-                shortestDist = dist;
-                shortestPoint.lat = dlat;
-                shortestPoint.lng = dlng;
-
-            }
-        }
 
         //if click on heatmap zoom in on it
-        if(shortestDist < 1) {
-            map.set('center', new google.maps.LatLng(shortestPoint.lat, shortestPoint.lng));
-            map.set('zoom', 13)
+        if(c.dist < 1) {
+            map.set('center', new google.maps.LatLng(c.location.lat, c.location.lng));
+            map.set('zoom', 13);
         }
     });
 
+    //Call api for heatmap
+    makeCitiesApiCall();
+
 }
+
+
+function getClosestCity(lat, lng){
+    var shortestDist = 1000; //Large number
+    var shortestPoint = {lat: -1, lng: -1}; //invalid coordinates
+    var city_id = -1; //Invalid ID
+
+    for(var i=0; i < heatMapData.length; i++){
+        var dlat = heatMapData[i].location.lat(),
+            dlng = heatMapData[i].location.lng();
+
+        var dist = Math.sqrt(Math.pow(lat-dlat,2) + Math.pow(lng-dlng,2));
+
+        //If new shortest
+        if(dist < shortestDist){
+            shortestDist = dist;
+            shortestPoint.lat = dlat;
+            shortestPoint.lng = dlng;
+            city_id = heatMapData[i].city_id;
+
+        }
+    }
+
+    return {dist: shortestDist,
+            location: {lat: shortestPoint.lat, lng: shortestPoint.lng},
+            'city_id': city_id
+    };
+
+}
+
 
 
 /**
@@ -232,13 +253,19 @@ function addMapMarkers(markers){
 
             //Custom attributes
             marker_id: mark.id,
+            type:mark.type,
             clicked: false
         });
         //On click on a marker
         marker.addListener('click',function(){
-            console.log(marker.clicked);
             marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]) ;
             marker.clicked = !marker.clicked;
+            if(marker.clicked) {
+                makeArticelApiCall(marker.type, marker.marker_id);
+            }else{
+                //TODO:HIDE ARTICLE
+                console.log("Hide article");
+            }
 
         });
         mapMarkersArray.push(marker);
@@ -255,7 +282,7 @@ function addMapHeatmap(cities) {
     cities.forEach(function(city){
         heatMapData.push({
             location: new google.maps.LatLng(city.pos.lat, city.pos.lng),
-            weight: city.temperature,
+            weight: city.temperature*3,
             city_id: city.id
         });
     });
@@ -279,9 +306,10 @@ function addMapHeatmap(cities) {
         'rgba(255, 0, 0, 1)'
     ];
 
+
     var newdata = new google.maps.MVCArray(heatMapData);
     heatmap.set('data', newdata);
     heatmap.set('gradient', gradient);
     heatmap.set('radius', map.zoom*4);
-    heatmap.set('opacity',0.5);
+    heatmap.set('opacity',0.9);
 }
