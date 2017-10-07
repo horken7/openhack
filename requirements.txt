@@ -1,2 +1,3 @@
 Django
-rest_framework
+djangorestframework
+coreapi
