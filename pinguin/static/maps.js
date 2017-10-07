@@ -254,14 +254,15 @@ function addMapMarkers(markers){
             //Custom attributes
             marker_id: mark.id,
             type:mark.type,
-            clicked: false
+            clicked: false,
+            title: mark.title
         });
         //On click on a marker
         marker.addListener('click',function(){
             marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]) ;
             marker.clicked = !marker.clicked;
             if(marker.clicked) {
-                makeArticelApiCall(marker.type, marker.marker_id);
+                makeArticelApiCall(marker.title, marker.pos);
             }else{
                 //TODO:HIDE ARTICLE
                 console.log("Hide article");
@@ -282,7 +283,7 @@ function addMapHeatmap(cities) {
     cities.forEach(function(city){
         heatMapData.push({
             location: new google.maps.LatLng(city.pos.lat, city.pos.lng),
-            weight: city.temperature*3,
+            weight: city.temperature*2,
             city_id: city.id
         });
     });

@@ -3,23 +3,52 @@
  */
 
 //Public variables for plotting on the map
-var mapTestMarkers; 
+var mapTestMarkers;
 var mapTestCities;
-
+var work_type;
 /**
  * Function that calls the API for cities to make the heatmap
  * @param callback
  */
-function makeCitiesApiCall(work_type){
+function makeCitiesApiCall(){
+    if(!work_type) work_type = "all";
+    var url_heatmap = "http://localhost:8000/pinguin/api/heatmap?occupation=" + work_type;
 
-    mapTestCities = [{id: "gote", temperature: 0.9 ,name: 'Göteborg', pos: {lat: 57.70887000, lng: 11.97456000}, job: 'Rörmockare'},
+     $.ajax({
+            url: url_heatmap,
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            success: function (response) {
+                mapTestCities = [];
+                for(var i = 0; i < response.length; i++){
+                    if(response[i].occupation == work_type){
+                        var r = response[i];
+                        mapTestCities.push({
+                            id: r.id,
+                            temperature: r.heat,
+                            name: r.city,
+                            pos: {lat: r.latitude, lng: r.longitude},
+                            job: r.occupation
+                        });
+                    }
+                }
+                addMapHeatmap(mapTestCities);
+
+            },
+            error: function (xhr, status) {
+                console.log(status);
+            }
+        });
+
+    /*mapTestCities = [{id: "gote", temperature: 0.9 ,name: 'Göteborg', pos: {lat: 57.70887000, lng: 11.97456000}, job: 'Rörmockare'},
         {id: "sthlm", temperature: 0.82 ,name: 'Stockholm', pos: {lat: 59.334591, lng:18.063240}, job: 'Snickare'},
         {id: "malmo", temperature: 0.2 ,name: 'Malmö', pos: {lat: 55.607075, lng:13.002716}, job: 'Lärare'},
         {id: "karls", temperature: 0.62 ,name: 'Karlstad', pos: {lat: 59.3793, lng:13.50357}, job: 'Kock'},
         {id: "mora", temperature: 0.4 ,name: 'Mora', pos: {lat: 61.004627, lng: 14.537272}, job: 'Skidvallare'}
-    ];
+    ];*/
 
-    addMapHeatmap(mapTestCities);
+
 
 }
 
@@ -29,49 +58,78 @@ function makeCitiesApiCall(work_type){
  */
 
 function makeMarkersApiCall(city, lookingFor){
-    switch (city) {
-        case "gote":
-            mapTestMarkers = [{id: "fst", type: 'home', pos: {lat: 57.70887000, lng: 11.94456000}, title: '2a 55kvm'},
-                {id: "snd", type: 'home', pos: {lat: 57.70687000, lng: 11.98456000}, title: '3a 75kvn'},
-                {id: "trd", type: 'work', pos: {lat: 57.71887000, lng: 11.99456000}, title: 'kallkökskock'},
-                {id: "fth", type: 'work', pos: {lat: 57.72887000, lng: 11.96456000}, title: 'Skidvallare'}];
-            break;
-        case "sthlm":
-            mapTestMarkers = [{id: "fst", type: 'home', pos: {lat: 59.364591, lng:18.003240}, title: '2a 55kvm'},
-                {id: "snd", type: 'home', pos: {lat: 59.334591, lng:18.033240}, title: '3a 75kvn'},
-                {id: "trd", type: 'work', pos: {lat: 59.344591, lng:18.033240}, title: 'kallkökskock'},
-                {id: "fth", type: 'work', pos: {lat: 59.330591, lng:18.013240}, title: 'Skidvallare'}];
-            break;
-        case "karls":
-            mapTestMarkers = [{id: "fst", type: 'home', pos: {lat: 59.3793, lng:13.59357}, title: '2a 55kvm'},
-                {id: "snd", type: 'home', pos: {lat: 59.3693, lng:13.51357}, title: '3a 75kvn'},
-                {id: "trd", type: 'work', pos: {lat: 59.3893, lng:13.50357}, title: 'kallkökskock'},
-                {id: "fth", type: 'work', pos: {lat: 59.3723, lng:13.52357}, title: 'Skidvallare'}];
-            break;
-        case "malmo":
-            mapTestMarkers = [{id: "fst", type: 'home', pos: {lat: 55.607075, lng:13.012716}, title: '2a 55kvm'},
-                {id: "snd", type: 'home', pos: {lat: 55.647075, lng:13.12716}, title: '3a 75kvn'},
-                {id: "trd", type: 'work', pos: {lat: 55.697075, lng:13.02716}, title: 'kallkökskock'},
-                {id: "fth", type: 'work', pos: {lat: 55.787075, lng:13.002716}, title: 'Skidvallare'}];
-            break;
-        case "mora":
-            mapTestMarkers = [{id: "fst", type: 'home', pos: {lat: 61.014627, lng: 14.538272}, title: '2a 55kvm'},
-                {id: "snd", type: 'home', pos: {lat: 61.006627, lng: 14.537472}, title: '3a 75kvn'},
-                {id: "trd", type: 'work', pos: {lat: 61.004627, lng: 14.582272}, title: 'kallkökskock'},
-                {id: "fth", type: 'work', pos: {lat: 61.026627, lng: 14.589472}, title: 'Skidvallare'}];
-            break;
+    var cityName = "";
+    var housingComplete = false;
+    var jobsComplete = false;
+    mapTestMarkers = [];
+    for(var i=0; i < mapTestCities.length; i++){
+        if(mapTestCities[i].id == city){
+            cityName = mapTestCities[i].name;
+        }
     }
 
-    addMapMarkers(mapTestMarkers);
+
+    var url_home = "http://localhost:8000/pinguin/api/housing?city=" + cityName;
+    $.ajax({
+        url: url_home,
+        type: "GET",
+        crossDomain: true,
+        dataType: "json",
+        success: function (response) {
+            for(var i = 0; i < response.length; i++){
+                var r = response[i];
+                mapTestMarkers.push({
+                    id: r.id,
+                    type: "home",
+                    pos: {lat: r.latitude, lng: r.longitude},
+                    title: r.prize + " kr, " + r.address
+                });
+
+        }
+        jobsComplete = true;
+        if(jobsComplete && housingComplete){
+            addMapMarkers(mapTestMarkers);
+        }
+    },
+    error: function (xhr, status) {
+        console.log(status);
+    }
+    });
+
+    url_jobs = "http://localhost:8000/pinguin/api/jobs?city=" + cityName;
+    $.ajax({
+        url: url_jobs,
+        type: "GET",
+        crossDomain: true,
+        dataType: "json",
+        success: function (response) {
+            for(var i = 0; i < response.length; i++){
+                var r = response[i];
+                if(r.type ==work_type){
+                    mapTestMarkers.push({
+                        id: r.id,
+                        type: "work",
+                        pos: {lat: r.latitude, lng: r.longitude},
+                        title: r.type + ", " + r.company
+                    });
+                }
+
+        }
+        housingComplete = true;
+        if(jobsComplete && housingComplete){
+            addMapMarkers(mapTestMarkers);
+        }
+    },
+    error: function (xhr, status) {
+            console.log(status);
+        }
+    });
 }
 
-function makeArticelApiCall(type, id){
-    switch (type) {
-        case 'home':
-            console.log('Display Home Article For ID: ' + id);
-            break;
-        case 'work':
-            console.log('Display Work Article For ID: ' + id);
-            break;
-    }
+function makeArticelApiCall(text, pos){
+    alert(text);
+}
+
+function selectionHandler(work){
+    work_type = work;
 }

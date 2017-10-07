@@ -43,11 +43,11 @@
 							</div>
 							
 							<div class="col-lg-6 options">
-								<div>1. Elektriker</div>
-								<div>2. Kock</div>
-								<div>3. Lärare</div>
-								<div>3. Mjukvaruutvecklare</div>
-								<div>3. Vårdpersonal</div>
+								<div onclick="selectionHandler('elektriker')">1. Elektriker</div>
+								<div onclick="selectionHandler('kock')">2. Kock</div>
+								<div onclick="selectionHandler('lärare')">3. Lärare</div>
+								<div onclick="selectionHandler('mjukvaruutvecklare')">4. Mjukvaruutvecklare</div>
+								<div onclick="selectionHandler('vård')">5. Vårdpersonal</div>
 							</div>
 						</div>
 
@@ -73,11 +73,10 @@
 			</div>
 		</div>
 
-
+		<script src="/static/js/jquery-3.2.1.min.js"></script>
 		<script src="/static/js/api-utils.js"></script>
 		<script src="/static/maps.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdeEbc5m6P5em_LlQ92oxsufsCU5hNadE&callback=initMap&libraries=visualization" type="text/javascript"></script>
-		<script src="/static/js/jquery-3.2.1.min.js"></script>
 		<script src="/static/js/animations.js"></script>
 		<script src="/static/js/popper.js"></script>
         <script src="/static/js/bootstrap.js"></script>

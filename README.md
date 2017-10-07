@@ -10,6 +10,7 @@ The service is based on an idea which originated from the hackathon Open Hack ho
 Backend:
 - Django (Python 3.6)
 - Django REST framework
+
 Frontend:
 - Bootstrap (HTML5)
 - CSS3
@@ -18,5 +19,5 @@ Frontend:
 
 ## Running instructions
 1. Clone this repo
-2. `pip install` all the requirements specified in `requirements.txt`
+2. `pip install -r requirements.txt`
 3. Run by calling `python manage.py runserver` from the root of the project
