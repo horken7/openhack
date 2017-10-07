@@ -14,7 +14,7 @@ router.register(r'heatmap', views.HeatmapViewSet)
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^api/$', include(router.urls)),
+    url(r'^api/', include(router.urls)),
     url(r'^schema/$', schema_view),
 ]
 

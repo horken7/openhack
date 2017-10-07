@@ -7,6 +7,7 @@ $('.options div').click(function() {
 		$('.slogan').fadeOut();
 		closeOverlay();
 		showMapLogo();
+		makeCitiesApiCall();
 
 		// display side bars
 		
