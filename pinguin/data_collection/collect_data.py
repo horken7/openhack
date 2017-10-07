@@ -30,20 +30,32 @@ class CollectData:
             listings = self.houseAPI.listings_city(city)
             amount_houses = listings['totalCount']
             inner_heat = []
+            amount_city = 0
             for occupation in self.occupations:
                 json_data = self.abfAPI.get_occupation_city(occupation, city)
                 amount_occupation = json_data['matchningslista']['antal_platserTotal']
+                amount_city = amount_city + amount_occupation
                 value = (amount_occupation * amount_houses) / self.population[city]
                 inner_heat.append(value)
             heats.append(inner_heat)
+
+            # location = self.geolocator.geocode(city)
+            # latitude = location.latitude
+            # longitude = location.longitude
+            latitude, longitude = self.ggcAPI.get_coordinates_city('stockholm')
+            value_city = (amount_city * amount_houses) / self.population[city]
+            h = Heatmap(city=city, occupation='all', longitude=longitude, latitude=latitude, heat=value_city)
+            h.save()
+
             print(city)
         heatmatrix = np.asmatrix(heats)
         for i in range(len(heatmatrix)):
             heatmatrix[:, i] = heatmatrix[:, i] / max(heatmatrix[:, i])
         for i, city in enumerate(self.cities):
-            location = self.geolocator.geocode(city)
-            latitude = location.latitude
-            longitude = location.longitude
+            # location = self.geolocator.geocode('stockholm')
+            # latitude = location.latitude
+            # longitude = location.longitude
+            latitude, longitude = self.ggcAPI.get_coordinates_city('stockholm')
             for j, occupation in enumerate(self.occupations):
                 heat = heatmatrix[i,j]
                 h = Heatmap(city=city, occupation=occupation, longitude=longitude, latitude=latitude, heat=heat)
