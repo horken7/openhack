@@ -1,0 +1,8 @@
+<h3>Vilket typ av arbete intresserar dig?</h3>
+<div class="grid grid-pad">
+	<a *ngFor="let choice of choices"  [routerLink]="['/', choice.next]"  class="col-1-4">
+		<div class="module choice">
+			<h4>{{choice.name}}</h4>
+		</div>
+	</a>	
+</div>

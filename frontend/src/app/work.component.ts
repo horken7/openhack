@@ -1,9 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { Choice } from './choice';
+import { ChoiceService } from './choice.service';
 
 @Component({
-  selector: 'my-app',
-  template: `
-    <h3>Hej</h3>
-  `,
+  selector: 'work',
+  templateUrl: './work.component.html',
 })
-export class WorkComponent {}
+export class WorkComponent implements OnInit {
+	choices: Choice[] = [];
+
+	constructor(private choiceService: ChoiceService) { }
+
+	ngOnInit(): void {
+		this.choiceService.getWork()
+		  .then(choices => this.choices = choices);
+	}
+}
