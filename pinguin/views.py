@@ -35,6 +35,8 @@ class HeatmapViewSet(viewsets.ModelViewSet):
     queryset = Heatmap.objects.all().order_by('occupation')
     serializer_class = HeatmapSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('occupation', 'occupation')
 
 def index(request):
     return render(request, 'pinguin/index.html')

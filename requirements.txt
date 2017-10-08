@@ -1,5 +1,7 @@
 Django
-djangorestframework
+djangorestframework==3.6.3
 coreapi
 django-filter
 geopy
+numpy
+django-cors-headers

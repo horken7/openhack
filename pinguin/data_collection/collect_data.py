@@ -42,7 +42,7 @@ class CollectData:
             # location = self.geolocator.geocode(city)
             # latitude = location.latitude
             # longitude = location.longitude
-            latitude, longitude = self.ggcAPI.get_coordinates_city('stockholm')
+            latitude, longitude = self.ggcAPI.get_coordinates_city(city)
             value_city = (amount_city * amount_houses) / self.population[city]
             h = Heatmap(city=city, occupation='all', longitude=longitude, latitude=latitude, heat=value_city)
             h.save()
@@ -52,7 +52,7 @@ class CollectData:
         for i in range(len(heatmatrix)):
             heatmatrix[:, i] = heatmatrix[:, i] / max(heatmatrix[:, i])
         for i, city in enumerate(self.cities):
-            location = self.geolocator.geocode('stockholm')
+            location = self.geolocator.geocode(city)
             latitude = location.latitude
             longitude = location.longitude
             # latitude, longitude = self.ggcAPI.get_coordinates_city('stockholm')

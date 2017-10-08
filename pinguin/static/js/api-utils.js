@@ -79,7 +79,7 @@ function makeMarkersApiCall(city, lookingFor){
             for(var i = 0; i < response.length; i++){
                 var r = response[i];
                 mapTestMarkers.push({
-                    id: r.id,
+                    id: r.ad_id,
                     type: "home",
                     pos: {lat: r.latitude, lng: r.longitude},
                     title: r.prize + " kr, " + r.address
@@ -107,7 +107,7 @@ function makeMarkersApiCall(city, lookingFor){
                 var r = response[i];
                 if(r.type ==work_type){
                     mapTestMarkers.push({
-                        id: r.id,
+                        id: r.ad_id,
                         type: "work",
                         pos: {lat: r.latitude, lng: r.longitude},
                         title: r.type + ", " + r.company
@@ -126,10 +126,32 @@ function makeMarkersApiCall(city, lookingFor){
     });
 }
 
-function makeArticelApiCall(text, pos){
-    alert(text);
+function makeArticelApiCall(text, pos, id){
+    alert();
+    makeAFadApiCall(id);
 }
 
 function selectionHandler(work){
     work_type = work;
+}
+
+
+/**
+ * Function that calls the AF API with given ad id
+ * @param callback
+ */
+function makeAFadApiCall(ad_id){
+    var url = "http://api.arbetsformedlingen.se/af/v0/platsannonser/" + ad_id;
+     $.ajax({
+            url: url,
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status) {
+                console.log(status);
+            }
+        });
 }

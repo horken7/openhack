@@ -262,7 +262,7 @@ function addMapMarkers(markers){
             marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]) ;
             marker.clicked = !marker.clicked;
             if(marker.clicked) {
-                makeArticelApiCall(marker.title, marker.pos);
+                makeArticelApiCall(marker.title, marker.pos, marker.marker_id);
             }else{
                 //TODO:HIDE ARTICLE
                 console.log("Hide article");
