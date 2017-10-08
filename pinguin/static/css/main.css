@@ -67,6 +67,31 @@ h1,h2, h3 {
   padding: 2rem;
 }
 
+.container {
+  z-index: 1000;
+}
+
+
+/*
+ * Sidebar
+ */
+.sidebar-wrapper {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #333;
+  text-shadow: none;
+}
+
+.sidebar {
+  position: absolute;
+  right: 0;
+  margin: 75px 20px 20px 20px;
+  padding: 20px;
+  border: 1px solid #f2f2f2;
+
+}
 
 /*
  * Header
@@ -177,15 +202,10 @@ h1,h2, h3 {
   position: fixed;
 }
 
+
 /*
  * Sidebar
  */
-.sidebar {
-  position: relative;
-  background-color: #fff;
-  color: #252525;
-  min-height: 
-}
 
 .title {
   width: 100%;

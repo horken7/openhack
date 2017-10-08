@@ -1,3 +1,5 @@
+
+
 $('.options div').click(function() {
 	$(this).closest('.row').slideUp();
 
@@ -18,9 +20,29 @@ $('.options div').click(function() {
 function closeOverlay() {
     $('.site-wrapper').fadeOut(50);
     showMapLogo();
+    updateSidebar();
 }
 
 function showMapLogo() {
 	$('.map-brand').fadeIn();
-	console.log("hello");
 }
+
+function updateSidebar(content) {
+	var sidebar = $('.sidebar');
+	var sidebarWrapper = $('.sidebar-wrapper');
+	sidebarWrapper.show();
+	if (content) {
+		sidebar.html(content);	
+	} else {
+		sidebar.html('hejsan');
+	}
+}
+
+/*
+$(document).mouseup(function(e) 
+{
+    var sidebar = $('.sidebar');
+    if (!sidebar.is(e.target) && sidebar.has(e.target).length === 0) {
+        sidebar.hide();
+    }
+});*/
