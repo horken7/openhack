@@ -20,7 +20,6 @@ $('.options div').click(function() {
 function closeOverlay() {
     $('.site-wrapper').fadeOut(50);
     showMapLogo();
-    updateSidebar();
 }
 
 function showMapLogo() {
@@ -38,6 +37,10 @@ function updateSidebar(content) {
 	}
 }
 
+function hideSidebar(){
+    var sidebarWrapper = $('.sidebar-wrapper');
+    sidebarWrapper.hide();
+}
 /*
 $(document).mouseup(function(e) 
 {

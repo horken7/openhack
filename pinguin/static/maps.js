@@ -137,7 +137,7 @@ function initMap() {
     //Redraw when window changes
     google.maps.event.addDomListenerOnce(map, 'idle', function () {
         google.maps.event.addDomListener(window, 'resize', function () {
-            map.setCenter(mapCenter);
+
         })
     });
 
@@ -262,10 +262,10 @@ function addMapMarkers(markers){
             marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]) ;
             marker.clicked = !marker.clicked;
             if(marker.clicked) {
-                makeArticelApiCall(marker.title, marker.pos, marker.marker_id);
+                makeArticelApiCall(marker.title, marker.type, marker.marker_id);
             }else{
-                //TODO:HIDE ARTICLE
-                console.log("Hide article");
+                console.log('Yolo');
+                hideSidebar();
             }
 
         });

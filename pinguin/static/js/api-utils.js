@@ -126,9 +126,12 @@ function makeMarkersApiCall(city, lookingFor){
     });
 }
 
-function makeArticelApiCall(text, pos, id){
-    alert();
-    makeAFadApiCall(id);
+function makeArticelApiCall(text, type, id){
+    if(type == 'work'){
+        makeAFadApiCall(id);
+    } else {
+        alert(text)
+    }
 }
 
 function selectionHandler(work){
@@ -141,14 +144,14 @@ function selectionHandler(work){
  * @param callback
  */
 function makeAFadApiCall(ad_id){
-    var url = "http://api.arbetsformedlingen.se/af/v0/platsannonser/" + ad_id;
+    var fab_url = "http://api.arbetsformedlingen.se/af/v0/platsannonser/" + ad_id;
      $.ajax({
-            url: url,
+            url: fab_url,
             type: "GET",
             crossDomain: true,
             dataType: "json",
-            success: function (response) {
-                console.log(response);
+            success: function (r) {
+                updateSidebar(r.platsannons.annons.annonstext);
             },
             error: function (xhr, status) {
                 console.log(status);
