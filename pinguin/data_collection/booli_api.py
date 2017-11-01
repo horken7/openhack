@@ -38,3 +38,16 @@ class HandlerBooliAPI:
             return json_data
         except:
             pass
+
+
+    def listings_add(self, id):
+        self.update_timestamp()
+        headers = {'Accept': 'application/vnd.booli-v2+json'}
+        url = "http://api.booli.se/listings/" + id + "?callerId=" + self.callerId + "&time=" + self.timestamp + "&unique=" + self.unique + "&hash=" + self.hashstr
+
+        response = requests.get(url, headers=headers)
+        try:
+            json_data = json.loads(response.text)
+            return json_data
+        except:
+            pass

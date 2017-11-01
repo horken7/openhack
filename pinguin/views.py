@@ -1,9 +1,11 @@
 from rest_framework import permissions, viewsets, generics, filters
+from django.http import HttpResponse
 
 from .serializers import JobsSerializer, HousingSerializer, ApplicantSerializer, HeatmapSerializer
 
 from .models import Jobs, Housing, Applicant, Heatmap
 from .data_collection.collect_data import CollectData
+from .data_collection.booli_api import HandlerBooliAPI
 
 from django.shortcuts import render
 
@@ -40,3 +42,15 @@ class HeatmapViewSet(viewsets.ModelViewSet):
 
 def index(request):
     return render(request, 'pinguin/index.html')
+
+def get_booli_ad(request):
+    if request.method == 'POST':
+        try:
+            id = request.POST.get('ad_id')
+            hp = HandlerBooliAPI()
+            json_data = hp.listings_add(id)
+            return HttpResponse(str(json_data[0]))
+        except(TypeError):
+            return HttpResponse('Invalid event request')
+    else:
+        return HttpResponse('Invalid event request')

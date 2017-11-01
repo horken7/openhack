@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^api/', include(router.urls)),
     url(r'^schema/$', schema_view),
+    url(r'^get_booli_ad/$', views.get_booli_ad),
 ]
 
 # request authentication for modification requests of api
