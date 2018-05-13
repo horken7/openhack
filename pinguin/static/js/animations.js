@@ -1,4 +1,10 @@
 
+var state = {
+        rightSidebarOpen: false,
+        workSelected: false,
+        housingSelected: false
+        };
+
 
 $('.options div').click(function() {
 	$(this).closest('.row').slideUp();
@@ -10,9 +16,6 @@ $('.options div').click(function() {
 		closeOverlay();
 		showMapLogo();
 		makeCitiesApiCall();
-
-		// display side bars
-		
 	}
 	$('.transparent').first().removeClass('transparent');
 })
@@ -29,6 +32,7 @@ function showMapLogo() {
 function updateSidebar(content) {
 	var sidebar = $('.sidebar');
 	var sidebarWrapper = $('.sidebar-wrapper');
+	state.rightSidebarOpen = true;
 	sidebarWrapper.show();
 	if (content) {
 		sidebar.html(content);	
@@ -39,13 +43,6 @@ function updateSidebar(content) {
 
 function hideSidebar(){
     var sidebarWrapper = $('.sidebar-wrapper');
+    state.rightSidebarOpen = false;
     sidebarWrapper.hide();
 }
-/*
-$(document).mouseup(function(e) 
-{
-    var sidebar = $('.sidebar');
-    if (!sidebar.is(e.target) && sidebar.has(e.target).length === 0) {
-        sidebar.hide();
-    }
-});*/

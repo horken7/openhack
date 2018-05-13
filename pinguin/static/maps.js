@@ -177,6 +177,13 @@ function initMap() {
         if(c.dist < 1) {
             map.set('center', new google.maps.LatLng(c.location.lat, c.location.lng));
             map.set('zoom', 13);
+            if (state.rightSidebarOpen){
+                hideSidebar();
+                mapMarkersArray.forEach(function(marker){
+                    marker.clicked = false;
+                    marker.set('icon', mapIcons[marker.type + "_default"]);
+            });
+            }
         }
     });
 
@@ -259,7 +266,7 @@ function addMapMarkers(markers){
         });
         //On click on a marker
         marker.addListener('click',function(){
-            marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]) ;
+            marker.clicked ? marker.set('icon', mapIcons[mark.type + "_default"]) : marker.set('icon', mapIcons[mark.type + "_clicked"]);
             marker.clicked = !marker.clicked;
             if(marker.clicked) {
                 makeArticelApiCall(marker.title, marker.type, marker.marker_id);

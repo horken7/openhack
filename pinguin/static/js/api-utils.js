@@ -7,6 +7,7 @@ var mapTestMarkers;
 var mapTestCities;
 var work_type;
 /**
+/**
  * Function that calls the API for cities to make the heatmap
  * @param callback
  */
@@ -105,7 +106,7 @@ function makeMarkersApiCall(city, lookingFor){
         success: function (response) {
             for(var i = 0; i < response.length; i++){
                 var r = response[i];
-                if(r.type ==work_type){
+                if(r.type == work_type){
                     mapTestMarkers.push({
                         id: r.ad_id,
                         type: "work",
@@ -130,7 +131,8 @@ function makeArticelApiCall(text, type, id){
     if(type == 'work'){
         makeAFadApiCall(id);
     } else {
-        alert(text)
+        console.log(text);
+        updateSidebar(parseHomeToHTML(text.split(',')[1], text.split(',')[0]));
     }
 }
 
@@ -151,10 +153,27 @@ function makeAFadApiCall(ad_id){
             crossDomain: true,
             dataType: "json",
             success: function (r) {
-                updateSidebar(r.platsannons.annons.annonstext);
+                console.log(r);
+                updateSidebar(parseWorkAddToHTML(r));
             },
             error: function (xhr, status) {
                 console.log(status);
             }
         });
+}
+
+
+function parseWorkAddToHTML(r){
+    var rubrik = r.platsannons.annons.annonsrubrik;
+    var text = r.platsannons.annons.annonstext;
+    var publicised = r.platsannons.annons.publiceraddatum;
+
+    var employer = r.platsannons.arbetsplats.arbetsplatsnamn;
+
+    return "<h1> " + rubrik + " </h1> <h3> " + employer + ", " + publicised.slice(0, 10) +" </h3>" + text;
+
+}
+
+function parseHomeToHTML(address, price, area = 400){
+    return "<h1>" + address + "</h1> <h3> Pris: " + Number(price.substring(0, price.length-3)).toLocaleString() + " kr</h3> <h3> Area: " + area + " m2</h3>"
 }
