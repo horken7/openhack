@@ -83,7 +83,7 @@ function makeMarkersApiCall(city, lookingFor){
                     id: r.ad_id,
                     type: "home",
                     pos: {lat: r.latitude, lng: r.longitude},
-                    title: r.prize + " kr, " + r.address
+                    title: r.prize + " kr, " + r.address + ", " + r.squaremeters
                 });
 
         }
@@ -132,7 +132,7 @@ function makeArticelApiCall(text, type, id){
         makeAFadApiCall(id);
     } else {
         console.log(text);
-        updateSidebar(parseHomeToHTML(text.split(',')[1], text.split(',')[0]));
+        updateSidebar(parseHomeToHTML(text.split(',')[1], text.split(',')[0], text.split(',')[2]));
     }
 }
 
