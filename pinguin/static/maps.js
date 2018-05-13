@@ -264,7 +264,7 @@ function addMapMarkers(markers){
             if(marker.clicked) {
                 makeArticelApiCall(marker.title, marker.type, marker.marker_id);
             }else{
-                console.log('Yolo');
+                console.log("Hiding work-add field bar.")
                 hideSidebar();
             }
 

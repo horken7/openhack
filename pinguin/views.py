@@ -7,7 +7,7 @@ from .data_collection.collect_data import CollectData
 
 from django.shortcuts import render
 
-debug = False
+debug = True
 
 if(debug):
     apa = CollectData()
