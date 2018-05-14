@@ -15,7 +15,7 @@ class CollectData:
         self.houseAPI = HandlerBooliAPI()
 
         self.cities = ['stockholm', 'göteborg', 'malmö', 'visby', 'karlstad']
-        self.population = {'stockholm':942370, 'göteborg':572779, 'malmö':342457, 'visby':23576, 'karlstad':61685}
+        self.population = {'stockholm': 942370, 'göteborg': 572779, 'malmö': 342457, 'visby': 23576, 'karlstad': 61685}
         self.occupations = ['lärare', 'kock', 'mjukvaruutvecklare', 'elektriker', 'vård']
 
         self.geolocator = Nominatim()

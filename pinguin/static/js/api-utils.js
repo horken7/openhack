@@ -6,6 +6,8 @@
 var mapTestMarkers;
 var mapTestCities;
 var work_type;
+
+var CURRENT_HOST = "127.0.0.1:8000" //"localhost:8000"
 /**
 /**
  * Function that calls the API for cities to make the heatmap
@@ -13,7 +15,7 @@ var work_type;
  */
 function makeCitiesApiCall(){
     if(!work_type) work_type = "all";
-    var url_heatmap = "http://localhost:8000/pinguin/api/heatmap?occupation=" + work_type;
+    var url_heatmap = "http://" + CURRENT_HOST + "/pinguin/api/heatmap?occupation=" + work_type;
 
      $.ajax({
             url: url_heatmap,
@@ -70,7 +72,7 @@ function makeMarkersApiCall(city, lookingFor){
     }
 
 
-    var url_home = "http://localhost:8000/pinguin/api/housing?city=" + cityName;
+    var url_home = "http://" + CURRENT_HOST + "/pinguin/api/housing?city=" + cityName;
     $.ajax({
         url: url_home,
         type: "GET",
@@ -97,7 +99,7 @@ function makeMarkersApiCall(city, lookingFor){
     }
     });
 
-    url_jobs = "http://localhost:8000/pinguin/api/jobs?city=" + cityName;
+    url_jobs = "http://" + CURRENT_HOST + "/pinguin/api/jobs?city=" + cityName;
     $.ajax({
         url: url_jobs,
         type: "GET",
